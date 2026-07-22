@@ -18,8 +18,12 @@ export const addComment = async (req,res) => {
          if(!project){
             return res.status(404).json({ message: "Project not found"});
          }
+         console.log("Logged in userId:",userId);
+         console.log("Project member userIds:",project.members.map((member) => member.userId)
+        );
 
-          const member = project.members.find((member)=> member.userId === userId)
+          const member = project.members.find((member)=> member.userId === userId);
+          console.log("Matched member:",member);
           
           if(!member){
             return res.status(403).json({ message: "You are not member of this project"});

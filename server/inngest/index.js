@@ -191,7 +191,7 @@ const sendTaskAssignmentEmail = inngest.createFunction(
           await step.run('send-task-reminder-mail',async ()=>{
            await sendEmail({
             to: task.assignee.email,
-            subject:`Reminder for ${task , project.name}`,
+            subject:`Reminder for ${task.project.name}`,
             body:`<div style="max-width: 600px;">
                   <h2>Hi ${task.assignee.name}, 👋 </h2>
 

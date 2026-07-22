@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { CheckSquareIcon, ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useUser } from '@clerk/react';
 
 function MyTasksSidebar() {
 
-    const user = { id: 'user_1' }
+    const {user} = useUser()
 
     const { currentWorkspace } = useSelector((state) => state.workspace);
     const [showMyTasks, setShowMyTasks] = useState(false);
@@ -37,8 +38,8 @@ function MyTasksSidebar() {
     }
 
     useEffect(() => {
-        fetchUserTasks()
-    }, [currentWorkspace])
+        fetchUserTasks();
+    }, [currentWorkspace?.projects,user]);
 
     return (
         <div className="mt-6 px-3">

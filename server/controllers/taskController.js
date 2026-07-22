@@ -21,6 +21,13 @@ export const createTask = async (req,res) => {
         }else if(assigneeId && !project.members.find(member => member.user.id === assigneeId)){
             return res.status(403).json({message:"assignee is not a member of the project / workspace"});
         }
+        console.log("=====BACKEND=====");
+        console.log("Project Members:");
+        console.log(project.members.map(member => ({
+            id:member.user.id,
+            email: member.user.email 
+        })));
+        console.log("Received assigneeId:",assigneeId);
 
         const task = await prisma.task.create({
             data:{
@@ -28,9 +35,10 @@ export const createTask = async (req,res) => {
                 title,
                 description,
                 priority,
-                assigneeId,
+                assigneeId: assigneeId || null,
                 status,
-                due_date: new Date(due_date)
+                type,
+                due_date: due_date ? new Date(due_date) : null
             }
         })
 
@@ -82,7 +90,7 @@ export const updateTask = async (req,res) => {
         }else if(project.team_lead !== userId){
              return res.status(403).json({message: "You don't have admin privileges for this project" });
         }
-        const updatedTak = await prisma.task.update({
+        const updatedTask = await prisma.task.update({
             where: {id: req.params.id},
             data:req.body
         })
@@ -91,7 +99,7 @@ export const updateTask = async (req,res) => {
         
 
         res.json({
-            task: UpdateTask,
+            task: updatedTask,
              message:"Task updated successfully"
             })
 
