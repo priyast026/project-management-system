@@ -143,6 +143,7 @@ const sendTaskAssignmentEmail = inngest.createFunction(
   {event: "app/task.assigned"},
   async ({event, step}) => {
     const {taskId, origin} = event.data;
+    console.log("Origin received by Inngest:",origin);
 
     const task= await prisma.task.findUnique({
       where: {id: taskId},

@@ -8,6 +8,7 @@ export const createTask = async (req,res) => {
         const {projectId, title, description,type, status, priority , assigneeId, due_date} = req.body;
         //const origin = req.get('origin')
         const origin = process.env.NODE_ENV === "production"?"https://project-management-system-cyan-eight.vercel.app":"http://localhost:5173";
+        console.log("Origin sent to Inngest:",origin);
 
         //check if user has admin role for project 
         const project = await prisma.project.findUnique({
